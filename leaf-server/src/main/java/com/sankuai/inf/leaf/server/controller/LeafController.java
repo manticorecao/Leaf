@@ -19,6 +19,7 @@ public class LeafController {
 
     @Autowired
     private SegmentService segmentService;
+
     @Autowired
     private SnowflakeService snowflakeService;
 
