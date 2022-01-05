@@ -2,10 +2,14 @@ package com.sankuai.inf.leaf.snowflake;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Charsets;
 import com.sankuai.inf.leaf.snowflake.exception.CheckLastTimeException;
 import org.apache.commons.io.FileUtils;
 import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.api.ACLProvider;
 import org.apache.curator.retry.RetryUntilElapsed;
+import org.apache.zookeeper.ZooDefs;
+import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,13 +41,15 @@ public class SnowflakeZookeeperHolder {
     private String ip;
     private String port;
     private String connectionString;
+    private String digest;
     private long lastUpdateTime;
 
-    public SnowflakeZookeeperHolder(String ip, String port, String connectionString) {
+    public SnowflakeZookeeperHolder(String ip, String port, String connectionString, String digest) {
         this.ip = ip;
         this.port = port;
         this.listenAddress = ip + ":" + port;
         this.connectionString = connectionString;
+        this.digest = digest;
     }
 
     public boolean init() {
@@ -217,7 +223,22 @@ public class SnowflakeZookeeperHolder {
     }
 
     private CuratorFramework createWithOptions(String connectionString, RetryPolicy retryPolicy, int connectionTimeoutMs, int sessionTimeoutMs) {
-        return CuratorFrameworkFactory.builder().connectString(connectionString)
+        CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder();
+        if(digest != null && digest.trim().length() > 0){
+            builder.authorization("digest", digest.getBytes(Charsets.UTF_8))
+                    .aclProvider(new ACLProvider() {
+                        @Override
+                        public List<ACL> getDefaultAcl() {
+                            return ZooDefs.Ids.CREATOR_ALL_ACL;
+                        }
+
+                        @Override
+                        public List<ACL> getAclForPath(final String path) {
+                            return ZooDefs.Ids.CREATOR_ALL_ACL;
+                        }
+                    });
+        }
+        return builder.connectString(connectionString)
                 .retryPolicy(retryPolicy)
                 .connectionTimeoutMs(connectionTimeoutMs)
                 .sessionTimeoutMs(sessionTimeoutMs)

@@ -69,6 +69,7 @@ Leaf Server configuration is in the leaf-server/src/main/resources/leaf.properti
 | leaf.jdbc.password        | mysql password                   |        |
 | leaf.snowflake.enable     | whether snowflake mode is enabled         | false  |
 | leaf.snowflake.zk.address | zk address under snowflake mode      |        |
+| leaf.snowflake.zk.digest | zk digest for acl     |        |
 | leaf.snowflake.port       | service registration port under snowflake mode |        |
 
 ### Segment mode 
