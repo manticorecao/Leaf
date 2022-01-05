@@ -41,6 +41,8 @@ Leaf Server的配置都在leaf-server/src/main/resources/leaf.properties中
 | leaf.snowflake.zk.address | snowflake模式下的zk地址       |        |
 | leaf.snowflake.zk.digest | snowflake模式下的zk acl digest       |        |
 | leaf.snowflake.port       | snowflake模式下的服务注册端口 |        |
+| leaf.secure.enable       | 是否开启通信安全模式 | false  |
+| leaf.secure.secret       | 通信安全模式使用的secret |   |
 
 #### 号段模式
 

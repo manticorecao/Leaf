@@ -71,6 +71,9 @@ Leaf Server configuration is in the leaf-server/src/main/resources/leaf.properti
 | leaf.snowflake.zk.address | zk address under snowflake mode      |        |
 | leaf.snowflake.zk.digest | zk digest for acl     |        |
 | leaf.snowflake.port       | service registration port under snowflake mode |        |
+| leaf.secure.enable       | whether security mode is enabled | false  |
+| leaf.secure.secret       | secret for security mode |   |
+
 
 ### Segment mode 
 
