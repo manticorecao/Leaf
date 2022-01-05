@@ -29,8 +29,10 @@ import com.sankuai.inf.leaf.server.controller.interceptor.SecureInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.support.CompositeUriComponentsContributor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 import javax.annotation.Resource;
 
@@ -46,6 +48,13 @@ public class ServerConfigure extends WebMvcConfigurationSupport {
 
     @Resource
     private SecureInterceptor secureInterceptor;
+
+
+    @Bean
+    public CompositeUriComponentsContributor mvcUriComponentsContributor(RequestMappingHandlerAdapter requestMappingHandlerAdapter) {
+        return new CompositeUriComponentsContributor(
+                requestMappingHandlerAdapter.getArgumentResolvers(), mvcConversionService());
+    }
 
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
