@@ -1,16 +1,15 @@
 package com.sankuai.inf.leaf.server.controller;
 
 import com.sankuai.inf.leaf.segment.SegmentIDGenImpl;
-import com.sankuai.inf.leaf.server.model.SegmentBufferView;
 import com.sankuai.inf.leaf.segment.model.LeafAlloc;
 import com.sankuai.inf.leaf.segment.model.SegmentBuffer;
+import com.sankuai.inf.leaf.server.model.SegmentBufferView;
 import com.sankuai.inf.leaf.server.service.SegmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,15 +25,8 @@ public class LeafMonitorController {
 
     private Logger logger = LoggerFactory.getLogger(LeafMonitorController.class);
 
-    private static final String ZERO = "0";
-
     @Autowired
     private SegmentService segmentService;
-
-    @RequestMapping(value = "hc")
-    public String healthCheck(){
-        return ZERO;
-    }
 
     @RequestMapping(value = "cache")
     public String getCache(Model model) {

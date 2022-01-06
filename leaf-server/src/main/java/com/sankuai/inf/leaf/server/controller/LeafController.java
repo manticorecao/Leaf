@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class LeafController {
     private Logger logger = LoggerFactory.getLogger(LeafController.class);
 
+    private static final String ZERO = "0";
+
     @Autowired
     private SegmentService segmentService;
 
@@ -43,5 +45,10 @@ public class LeafController {
             throw new LeafServerException(result.toString());
         }
         return String.valueOf(result.getId());
+    }
+
+    @RequestMapping(value = "hc")
+    public String healthCheck(){
+        return ZERO;
     }
 }
