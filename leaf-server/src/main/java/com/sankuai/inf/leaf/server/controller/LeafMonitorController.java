@@ -23,10 +23,18 @@ import java.util.Map;
 
 @Controller
 public class LeafMonitorController {
+
     private Logger logger = LoggerFactory.getLogger(LeafMonitorController.class);
+
+    private static final String ZERO = "0";
 
     @Autowired
     private SegmentService segmentService;
+
+    @RequestMapping(value = "hc")
+    public String healthCheck(){
+        return ZERO;
+    }
 
     @RequestMapping(value = "cache")
     public String getCache(Model model) {
